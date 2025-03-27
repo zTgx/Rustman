@@ -5,7 +5,7 @@ use serde_wasm_bindgen::to_value;
 // use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 // use std::{collections::HashMap, rc::Rc};
-use dioxus::logger::tracing::{debug, Level};
+use dioxus::logger::tracing::debug;
 
 static CSS: Asset = asset!("/assets/styles.css");
 
