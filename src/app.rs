@@ -5,7 +5,7 @@ use serde_wasm_bindgen::to_value;
 // use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 // use std::{collections::HashMap, rc::Rc};
-use dioxus::logger::tracing::debug;
+use web_sys::console;
 
 static CSS: Asset = asset!("/assets/styles.css");
 
@@ -47,19 +47,20 @@ pub fn App() -> Element {
     });
 
     let send_request = move || {
-        // Spawn an async task to handle the request
+        console::log_1(&format!("Sending request").into());
+
         spawn({
             let method = state.read().method.clone();
             let url = state.read().url.clone();
-
+            
             async move {
                 let args = serde_json::json!({
                     "method": method,
                     "url": url,
                 });
-
-                debug!("args: {:#?}", args);
-
+    
+                console::log_1(&format!("Sending request with args: {:#?}", args).into());
+    
                 let response = invoke("do_request", to_value(&args).unwrap()).await;
                 state.write().response = response.as_string().unwrap();
             }
@@ -68,13 +69,13 @@ pub fn App() -> Element {
 
     rsx! {
         document::Stylesheet { href: CSS }
-
+    
         div { class: "app-container",
             Sidebar {
                 selected_item: state.read().selected_sidebar.clone(),
                 on_select: move |item| state.write().selected_sidebar = item
             }
-
+    
             div { class: "main-panel",
                 div { class: "request-header",
                     select {
@@ -92,28 +93,34 @@ pub fn App() -> Element {
                     button {
                         class: "send-button",
                         onclick: move |_| {
-                            let _ = send_request;
+                            console::log_1(&format!(">>> Sending request").into());
+
+                            let _ = send_request();
                         },
                         "Send"
                     }
-                }
 
+                    
+                }
+    
                 div { class: "tabbed-content",
                     RequestTabs {}
-
+    
                     div { class: "response-view",
                         h2 { "Response Preview" }
-                        pre {
-                            class: "response-content",
-                            if state.read().response.is_empty() {
-                                "No response data yet"
-                            } else {
-                                "{state.read().response}"
+                        div { class: "response-container",
+                            pre {
+                                class: "response-content",
+                                if state.read().response.is_empty() {
+                                    "No response data yet"
+                                } else {
+                                    "{state.read().response}"
+                                }
                             }
                         }
                     }
                 }
-
+    
                 div { class: "status-bar",
                     span { "Rustman v0.0.1" }
                 }

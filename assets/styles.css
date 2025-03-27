@@ -1,44 +1,246 @@
 :root {
-  --primary-color: #FF6C37;
-  --sidebar-bg: #252526;
-  --panel-bg: #1F1F1F;
-  --border-color: #333;
+  /* 主色调 - 保留Rust元素但更明亮 */
+  --rust-orange: #E6531C;         /* Rust品牌橙色 - 用于重要操作 */
+  --rust-orange-light: #FF7B4D;   /* 更亮的橙色 */
+  --rust-dark: #2D3748;           /* 深蓝灰 - 替代纯黑 */
+  
+  /* 基础色 */
+  --bg-primary: #FFFFFF;          /* 主背景 */
+  --bg-secondary: #F7FAFC;        /* 次要背景 */
+  --bg-panel: #EDF2F7;            /* 面板背景 */
+  
+  /* 文字 */
+  --text-primary: #1A202C;        /* 主要文字 */
+  --text-secondary: #4A5568;      /* 次要文字 */
+  --text-accent: var(--rust-orange); /* 强调文字 */
+  
+  /* 边框 */
+  --border-light: #E2E8F0;        /* 轻边框 */
+  --border-medium: #CBD5E0;       /* 中等边框 */
+  
+  /* 功能色 */
+  --success: #38A169;             /* 成功绿色 */
+  --error: #E53E3E;               /* 错误红色 */
+  --warning: #DD6B20;             /* 警告橙色 */
+  --info: #3182CE;                /* 信息蓝色 */
 }
 
+/* 整体布局 */
 .app-container {
   display: grid;
   grid-template-columns: 240px 1fr;
   height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, sans-serif;
 }
 
+/* 侧边栏 */
 .sidebar {
-  background: var(--sidebar-bg);
-  border-right: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-light);
+  padding: 16px 0;
+  box-shadow: 1px 0 4px rgba(0,0,0,0.05);
 }
 
-.request-header {
+.sidebar-header {
+  padding: 0 16px 12px;
+  font-weight: 600;
+  color: var(--rust-orange);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.sidebar-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sidebar-item:hover {
+  background: var(--bg-panel);
+}
+
+.sidebar-item.active {
+  background: var(--rust-orange);
+  color: white;
+}
+
+/* 请求控制区 */
+.request-controls {
   display: flex;
   gap: 8px;
   padding: 12px;
-  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.method-select {
+  padding: 8px;
+  border: 1px solid var(--border-medium);
+  border-radius: 4px;
+  background: white;
+  color: var(--text-primary);
 }
 
 .url-input {
   flex: 1;
-  background: var(--panel-bg);
-  color: white;
-  padding: 8px;
-  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  border: 1px solid var(--border-medium);
+  border-radius: 4px;
+  background: white;
 }
 
 .send-button {
-  background: var(--primary-color);
+  background: var(--rust-orange);
+  color: white;
   padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;  /* 为按下效果做准备 */
+}
+
+/* 悬停状态 */
+.send-button:hover {
+  background: var(--rust-orange-light);
+}
+
+/* 按下状态 */
+.send-button:active {
+  transform: translateY(1px);  /* 下移1像素 */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); /* 内阴影效果 */
+}
+
+/* 加载状态（可选） */
+.send-button.loading::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,0.5);
   border-radius: 4px;
 }
 
-.status-badge {
-  &.success { background: #2ecc71; }
-  &.client-error { background: #e74c3c; }
-  /* ... */
+/* 参数表格 */
+.params-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--border-light);
+  border: 1px solid var(--border-light);
+  margin: 16px 0;
+}
+
+.params-header {
+  background: var(--bg-panel);
+  padding: 10px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.params-cell {
+  background: white;
+  padding: 12px;
+  min-height: 40px;
+}
+
+/* 响应预览区域 - 固定大小 */
+.response-preview {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 16px;
+  margin: 16px 0; /* 上下边距 */
+  min-height: 200px; /* 固定最小高度 */
+  height: calc(100vh - 400px); /* 动态高度计算 */
+  max-height: 500px; /* 最大高度限制 */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* 防止内容溢出 */
+}
+
+/* 响应内容区域 - 可滚动 */
+.response-content {
+  flex: 1;
+  overflow-y: auto; /* 内容超出时显示滚动条 */
+  background: var(--bg-panel);
+  border-radius: 4px;
+  padding: 12px;
+  font-family: 'Fira Code', monospace;
+  white-space: pre-wrap;
+}
+
+/* 无数据时的占位样式 */
+.no-response {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  background: var(--bg-panel);
+  border-radius: 4px;
+}
+
+/* 修改主面板布局 */
+.main-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 调整请求头部 */
+.request-header {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* 调整标签内容区域 */
+.tabbed-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 固定响应预览区域大小 */
+.response-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.response-container {
+  flex: 1;
+  min-height: 200px;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  overflow: auto;
+}
+
+.response-content {
+  padding: 16px;
+  margin: 0;
+  font-family: 'Fira Code', monospace;
+  white-space: pre-wrap;
+}
+
+.status-bar {
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
+  text-align: right;
+  margin-top: auto;
+  font-size: 0.75rem;  /* 从原来的0.85rem调小 */
+  color: var(--text-secondary);
 }
