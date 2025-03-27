@@ -1,7 +1,33 @@
-# Tauri + Dioxus
+<div align="center">
 
-This template should help get you started developing with Tauri and Dioxus.
+# Rustman   
+**🚀 The native, cross-platform API client built with Rust + Tauri + Dioxus**  
 
-## Recommended IDE Setup
+</div>
 
-[VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) + [Dioxus](https://marketplace.visualstudio.com/items?itemName=DioxusLabs.dioxus).
+## 🌟 Features
+
+### Core Features
+- [ ] **HTTP Methods**  
+  - `GET`/`POST` requests with customizable headers/params
+- [ ] **JSON Processing**  
+  - Syntax highlighting & collapsible tree view
+  - Validation and formatting
+- [ ] **Authentication**  
+  - API Key (Header/Query params)  
+  - Basic Auth  
+  - [ ] OAuth 2.0
+- [ ] **Workspace Organization**  
+  - Folder-based request management
+- [ ] **cURL Integration**  
+  - Import: Paste cURL commands → auto-convert to requests  
+  - Export: Share requests as cURL commands  
+- [ ] **CLI Mode**  
+  - `rustman run --file request.json`
+- [ ] **One-Click Copy**  
+  - Copy response body/headers with single click
+
+---
+
+## License
+Licensed under the [Apache-2.0](LICENSE) License.
