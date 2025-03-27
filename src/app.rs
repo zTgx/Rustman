@@ -18,9 +18,10 @@ extern "C" {
 #[derive(Clone, PartialEq)]
 enum SidebarItem {
     ApiCollections,
-    History,
-    Environments,
-    Settings,
+    // History,
+    // Environments,
+    // Settings,
+    Invite,
 }
 
 impl Default for SidebarItem {
@@ -132,20 +133,21 @@ pub fn App() -> Element {
 #[component]
 fn Sidebar(selected_item: SidebarItem, on_select: EventHandler<SidebarItem>) -> Element {
     let items = vec![
-        ("API Collections", "📚", SidebarItem::ApiCollections),
-        ("History", "🕒", SidebarItem::History),
-        ("Environments", "⚙️", SidebarItem::Environments),
-        ("Settings", "🔧", SidebarItem::Settings),
+        ("APIs", "📚", SidebarItem::ApiCollections),
+        // ("History", "🕒", SidebarItem::History),
+        // ("Environments", "⚙️", SidebarItem::Environments),
+        // ("Settings", "🔧", SidebarItem::Settings),
+        ("Invite", "👥", SidebarItem::Invite),
     ];
 
     rsx! {
         aside { class: "sidebar",
             ul { class: "sidebar-menu",
                 for (name, icon, item) in items {
-                    li {
+                    ul {
                         class: if selected_item == item { "sidebar-item active" } else { "sidebar-item" },
                         onclick: move |_| on_select.call(item.clone()),
-                        span { class: "sidebar-icon", "{icon}" }
+                        span { class: "sidebar-icon", "{icon} " }
                         span { class: "sidebar-text", "{name}" }
                     }
                 }
