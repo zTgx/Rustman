@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "rustman",
+        "title": "Rustman",
         "width": 800,
         "height": 600
       }
