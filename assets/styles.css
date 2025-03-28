@@ -244,3 +244,113 @@
   font-size: 0.75rem;  /* 从原来的0.85rem调小 */
   color: var(--text-secondary);
 }
+
+/* Tab按钮样式 */
+.tab-buttons {
+  display: flex;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tab-btn:hover {
+  border-bottom-color: #cbd5e0;
+}
+
+.tab-btn.active {
+  border-bottom-color: #4299e1;
+  font-weight: 500;
+}
+
+/* 参数表格样式 */
+.params-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+
+.params-table th, .params-table td {
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.params-table th {
+  background-color: #f7fafc;
+  font-weight: 500;
+}
+
+.params-table input[type="text"],
+.params-table select {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.params-table input[type="checkbox"] {
+  margin: 0 auto;
+  display: block;
+}
+
+/* 操作按钮 */
+.delete-btn {
+  background: #f56565;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.add-param-btn {
+  background: #4299e1;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-param-btn:hover {
+  background: #3182ce;
+}
+
+/* 同步状态指示器 */
+.url-input:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
+}
+
+.params-table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* 参数修改高亮 */
+.params-table input:focus {
+  border-color: #48bb78;
+}
+
+.tab-btn.active {
+  border-bottom: 2px solid #4299e1;
+  font-weight: bold;
+}
+.tab-pane {
+  display: none;
+}
+.tab-pane.active {
+  display: block;
+}

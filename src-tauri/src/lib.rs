@@ -2,7 +2,7 @@
 #[tauri::command]
 async fn do_request(method: String, url: String) -> Result<String, String> {
     println!("method: {method}");
-    
+
     let client = reqwest::Client::new();
 
     let response = match method.as_str() {
@@ -20,10 +20,7 @@ async fn do_request(method: String, url: String) -> Result<String, String> {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .setup(|_app| {
-            
-            Ok(())
-        })
+        .setup(|_app| Ok(()))
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![do_request])
         .run(tauri::generate_context!())
